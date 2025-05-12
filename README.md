@@ -1,48 +1,76 @@
-# [Course program (for RS School students)](https://github.com/rolling-scopes-school/tasks/blob/master/node/README.md)
+# [Course program module (for RS School students)](https://github.com/rolling-scopes-school/tasks/blob/master/node/modules/testing/README.md)
 
-# Node.js Assignments
+<h1 align="center">Assignment: Basic testing</h1>
 
-## Node.js basics
-- [Assignment](assignments/nodejs-basics/assignment.md)
-- [Scoring](assignments/nodejs-basics/score.md)
-- [Cross-Check manual](assignments/nodejs-basics/cross-check-manual.md)
+## Description
 
-## File Manager
-- [Assignment](assignments/file-manager/assignment.md)
-- [Scoring](assignments/file-manager/score.md)
+Your task is to write unit tests using [Jest](https://jestjs.io) API.
 
-## Basic Testing
-- [Assignment](assignments/basic-testing/assignment.md)
-- [Scoring](assignments/basic-testing/score.md)
+Fork [this repository](https://github.com/AlreadyBored/basic-testing)
 
-## Simple CRUD API
-- [Assignment](assignments/crud-api/assignment.md)
-- [Scoring](assignments/crud-api/score.md)
+Assignment contains several nested folders inside `src`. Your task is to write unit tests inside test cases
 
-## Battleship backend
-- [Assignment](assignments/battleship/assignment.md)
-- [Scoring](assignments/battleship/score.md)
+## Technical requirements
 
-## GraphQL service
-- [Assignment](assignments/graphql-service/assignment.md)
-- [Scoring](assignments/graphql-service/score.md)
+Follow instructions in repository's `Readme.md`
 
-## REST Service: Basic
-- [Assignment](assignments/rest-service/assignment.md)
-- [Scoring](assignments/rest-service/score.md)
+---
+<h1 align="center">Scoring: Basic testing</h1>
 
-## REST service: Database & ORM
-- [Assignment](assignments/database-orm/assignment.md)
-- [Scoring](assignments/database-orm/score.md)
+## Check
+For check simplification you have pre-implemented npm-scripts in `package.json`
 
-## REST service: Logging & Error handling
-- [Assignment](assignments/logging-error-handling/assignment.md)
-- [Scoring](assignments/logging-error-handling/score.md)
+## Basic Scope
 
-## REST service: Authentication & Authorization
-- [Assignment](assignments/authentication/assignment.md)
-- [Scoring](assignments/authentication/score.md)
+For each implemented test-case:
+- **+6** if test case is implemented correctly
+- **+3** if test case is implemented incorrectly
+- **0** if test case is not implemented
 
-## REST service: Containerization
-- [Assignment](assignments/containerization/assignment.md)
-- [Scoring](assignments/containerization/score.md)
+Test case is considered to be correctly implemented if:  
+- Actually tests what's described in its title
+
+Bad:
+```ts
+test('should return null if one of arguments is negative number', () => {
+    const result = sumPositiveNumbers(2, 3);
+    expect(result).toBe(5);
+});
+```
+Good:
+```ts
+test('should return null if one of arguments is negative number', () => {
+    const result = sumPositiveNumbers(1, -1);
+    expect(result).toBeNull();
+});
+```
+- Doesn't break in case if we break functionality that is being tested
+```ts
+// isEven.ts
+
+export const isEven = (num: number) => {
+    return num % 2 === 0 ? 'Yes' : 'No';
+};
+```
+Good:
+```ts
+test('should return "Yes" for even numbers', () => {
+    const result = isEven(8);
+    expect(result).toBe('Yes');
+});
+```
+Bad:
+```ts
+test('should return "Yes" for even numbers', () => {
+    const result = isEven(8);
+    expect(typeof result).toBe('string');
+});
+```
+- Stable (multiple runs produce same test result)
+- Isolated (don't rely on external data/don't perform external API calls)
+
+## Forfeits
+
+- **-5** for each linter warning
+- **-10** for each linter/TS compiler error
+- **-30% of total task score** Commits after deadline (except commits that affect only Readme.md, .gitignore, etc.)
